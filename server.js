@@ -10,7 +10,10 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'ui/index.html'));
 });
 
+app.get('/shader.js', (req, res) => {
+    res.sendFile(path.join(__dirname, 'shader.js'));
+});
+
 app.listen(port, host, () => {
     console.log(`[x] server up and running on http://${host}:${port}...`);
 });
-
