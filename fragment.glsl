@@ -1,5 +1,8 @@
-precision mediump float;
+#version 300 es
+
+precision highp float;
+out vec4 outColor;
 
 void main() {
-    gl_FragColor = vec4(1, 0, 0.5, 1);
+    outColor = vec4(0.4, 0.8, 0.7, 1);
 }

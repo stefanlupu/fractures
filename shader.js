@@ -4,7 +4,7 @@ var main = async function() {
     // these dimensions match the css which means all pixels should be in frame
     canvas.width = 720;
     canvas.height = 480;
-    var gl = canvas.getContext('webgl');
+    var gl = canvas.getContext('webgl2');
     
     var vertexSource = await getShaderSource('vertex');
     var fragmentSource = await getShaderSource('fragment');
@@ -26,14 +26,11 @@ var main = async function() {
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
 
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-    gl.clearColor(0.9, 0.85, 0.8, 1.0);
-    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-    gl.useProgram(program);
+    var vao = gl.createVertexArray();
+    gl.bindVertexArray(vao);
 
     gl.enableVertexAttribArray(positionAttributeLocation);
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+
     var size = 2;
     var type = gl.FLOAT;
     var normalize = false;
@@ -43,6 +40,14 @@ var main = async function() {
     gl.vertexAttribPointer(
 	positionAttributeLocation, size, type, normalize, stride, offset
     );
+
+    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+
+    gl.clearColor(0.9, 0.85, 0.8, 1.0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.useProgram(program);
+
+    gl.bindVertexArray(vao);
 
     var primitiveType = gl.TRIANGLES;
     var offset = 0;
